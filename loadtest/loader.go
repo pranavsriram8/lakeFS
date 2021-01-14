@@ -38,6 +38,7 @@ type Config struct {
 	KeepRepo         bool
 	Credentials      model.Credential
 	ServerAddress    string
+	DefaultStorageNamespace string
 }
 
 var (
@@ -117,7 +118,7 @@ func (t *Loader) getClient() (apiClient api.Client, err error) {
 		// using an existing repo, no need to create a client
 		return nil, nil
 	}
-	apiClient, err = api.NewClient(t.Config.ServerAddress, t.Config.Credentials.AccessKeyID, t.Config.Credentials.AccessSecretKey)
+	apiClient, err = api.NewClient(t.Config.ServerAddress, t.Config.Credentials.AccessKeyID, t.Config.Credentials.AccessSecretKey, t.Config.DefaultStorageNamespace)
 	if err != nil {
 		return nil, ErrCreateClient
 	}

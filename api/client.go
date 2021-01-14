@@ -731,7 +731,7 @@ func (c *client) DeleteObject(ctx context.Context, repository, branchID, path st
 	return err
 }
 
-func NewClient(endpointURL, accessKeyID, secretAccessKey string) (Client, error) {
+func NewClient(endpointURL, accessKeyID, secretAccessKey string, defaultStorageNamespace string) (Client, error) {
 	parsedURL, err := url.Parse(endpointURL)
 	if err != nil {
 		return nil, err

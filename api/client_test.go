@@ -21,11 +21,11 @@ func TestNewClient(t *testing.T) {
 	// Close the server when test finishes
 	defer server.Close()
 
-	client, err := NewClient(server.URL, "key", "secret")
+	client, err := NewClient(server.URL, "key", "secret", "storageNamespace")
 	testutil.Must(t, err)
 	_, _, _ = client.ListRepositories(context.Background(), "", 0)
 
-	client, err = NewClient(server.URL+genclient.DefaultBasePath, "key2", "secret2")
+	client, err = NewClient(server.URL+genclient.DefaultBasePath, "key2", "secret2", "storageNamespace2")
 	testutil.Must(t, err)
 	_, _, _ = client.ListRepositories(context.Background(), "", 0)
 
