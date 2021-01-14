@@ -40,6 +40,8 @@ const (
 
 	serviceAPIServer = "api"
 	serviceS3Gateway = "s3gateway"
+
+	ConfigServerEndpointURL = "server.endpoint_url"
 )
 
 type Shutter interface {
@@ -180,7 +182,14 @@ var runCmd = &cobra.Command{
 	},
 }
 
-const runBanner = `
+func printWelcome(w io.Writer) {
+	
+	endpointURL := cfg.GetListenAddress()
+	if endpointURL == "" {
+		fmt.Fprintf(w,"No URL found")
+	}
+
+	_, _ = fmt.Fprint(w, fmt.Sprintf(`
 
      ██╗      █████╗ ██╗  ██╗███████╗███████╗███████╗
      ██║     ██╔══██╗██║ ██╔╝██╔════╝██╔════╝██╔════╝
@@ -191,7 +200,7 @@ const runBanner = `
 
 │
 │ If you're running lakeFS locally for the first time,
-│     complete the setup process at http://127.0.0.1:8000/setup
+│     complete the setup process at %s/setup
 │
 
 │
@@ -199,10 +208,7 @@ const runBanner = `
 │     check out the docs at https://docs.lakefs.io/quickstart/repository
 │
 
-`
-
-func printWelcome(w io.Writer) {
-	_, _ = fmt.Fprint(w, runBanner)
+`,endpointURL))
 }
 
 func registerPrometheusCollector(db sqlstats.StatsGetter) {
