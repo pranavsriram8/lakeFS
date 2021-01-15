@@ -40,8 +40,6 @@ const (
 
 	serviceAPIServer = "api"
 	serviceS3Gateway = "s3gateway"
-
-	ConfigServerEndpointURL = "server.endpoint_url"
 )
 
 type Shutter interface {
